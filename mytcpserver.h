@@ -4,12 +4,13 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
-
+#include "server_logic.h"
 class MyTcpServer : public QObject
 {
     Q_OBJECT
 public:
     explicit MyTcpServer(QObject *parent = 0);
+     ServerLogic logic;
 
 public slots:
     void slotNewConnection();
@@ -17,8 +18,11 @@ public slots:
     void slotClientDisconnected();
 
 private:
+    QList<QTcpSocket*> clients;
     QTcpServer * mTcpServer;
     QTcpSocket * mTcpSocket;
+    QString wait_request(QTcpSocket *socket);
+
 };
 
 

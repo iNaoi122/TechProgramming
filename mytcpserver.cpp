@@ -24,31 +24,52 @@ void MyTcpServer::slotNewConnection()
 
     mTcpSocket->write("Hello, World!!! I am echo server!\r\n");
 
+//    qDebug()<<wait_request(mTcpSocket);
+
+    if(false)
+    {
+        mTcpSocket->write("Not authorized!");
+        mTcpSocket->disconnectFromHost();
+    }
+    else clients.append(mTcpSocket);
+
     connect(mTcpSocket, &QTcpSocket::readyRead, this, &MyTcpServer::slotServerRead);
     connect(mTcpSocket, &QTcpSocket::disconnected, this, &MyTcpServer::slotClientDisconnected);
 }
 
 void MyTcpServer::slotServerRead()
 {
-    QString res = "";
-    while(mTcpSocket->bytesAvailable()>0)
-       {
-           QByteArray array =mTcpSocket->readAll();
-           //qDebug()<<array<<"\n";
-           if(array=="\x01")
-           {
-               mTcpSocket->write(res.toUtf8());
-               res = "";
-           }
-           else
-               res.append(array);
-       }
+    QTcpSocket *mTcpSocket = qobject_cast<QTcpSocket*>(sender());
+    if(!mTcpSocket) return;
+    if(!clients.contains(mTcpSocket))
+    {
+        mTcpSocket->write("Not authorized!");
+        mTcpSocket->disconnectFromHost();
+    }
+       QString res = wait_request(mTcpSocket);
        mTcpSocket->write(res.toUtf8());
-       ServerLogic logic;
-       logic.requestAnalyzer(res.chopped(2));
+       logic.requestAnalyzer(res.chopped(2), mTcpSocket);
 }
 
 void MyTcpServer::slotClientDisconnected()
 {
     mTcpSocket->close();
+    clients.removeOne(mTcpSocket);
+}
+
+QString MyTcpServer::wait_request(QTcpSocket *socket)
+{
+    QString res = "";
+
+    while(mTcpSocket->bytesAvailable()>0)
+       {
+           QByteArray array =socket->readAll();
+       if(array=="\x01")
+         {
+             socket->write("recieve");
+          }
+        else
+           res.append(array);
+       }
+    return res;
 }
