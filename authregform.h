@@ -15,6 +15,7 @@ class AuthRegForm : public QWidget
 public:
     explicit AuthRegForm(QWidget *parent = nullptr);
     ~AuthRegForm();
+    void clearFields();
     //FunctionsForClient* get_func();
 
 signals:

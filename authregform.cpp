@@ -21,9 +21,15 @@ void AuthRegForm::on_pushButtonAuth_clicked()
     emit is_auth(ui->lineEditLogin->text(), ui->lineEditPassword->text());
 }
 
+void AuthRegForm::clearFields() {
+    ui->lineEditLogin->clear();
+    ui->lineEditPassword->clear();
+    ui->lineEditEmail->clear();
+}
 
 void AuthRegForm::on_pushButtonChange_clicked()
 {
+    clearFields();
     bool flag = ui->labelEmail->isVisible();
 
     ui->labelEmail->setVisible(!flag);
@@ -40,3 +46,4 @@ void AuthRegForm::on_pushButtonChange_clicked()
 FunctionsForClient* AuthRegForm::get_func(){
     return &(this->func);
 }*/
+

@@ -7,7 +7,7 @@ FunctionsForClient::FunctionsForClient() {
 }
 
 void FunctionsForClient::is_auth(QString log, QString pass){
-    if (log == "admin" && pass == "admin") {
+    if (log == "1" && pass == "1") {
         delete ui_auth;
         ui_main = new MainWindow;
         ui_main->show();
