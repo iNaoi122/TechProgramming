@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>521</width>
+    <height>513</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(229, 243, 255);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>501</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelNumOfIterations">
+         <property name="text">
+          <string>               Макс. кол-во итераций</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBoxGradientStep"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelInitialValue">
+         <property name="text">
+          <string>Начальное значения градиента</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="spinBoxInitialValue"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelY">
+         <property name="text">
+          <string>                                                        y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEditY"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEditX"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelGradientStep">
+         <property name="text">
+          <string>                               Шаг градиента</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="spinBoxNumOfIterations"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelX">
+         <property name="text">
+          <string>                                                        x</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="labelGraph">
+         <property name="text">
+          <string>                                                                     График</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="graphicsViewGraph">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="6" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="pushButton_Start">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(187, 229, 255);</string>
+             </property>
+             <property name="text">
+              <string>History</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_Exit">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(187, 229, 255);</string>
+             </property>
+             <property name="text">
+              <string>Exit</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="6" column="1">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPushButton" name="pushButtonRun">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(187, 229, 255);</string>
+             </property>
+             <property name="text">
+              <string>Run</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonStop">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(187, 229, 255);</string>
+             </property>
+             <property name="text">
+              <string>Stop</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
