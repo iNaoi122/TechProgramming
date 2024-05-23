@@ -18,7 +18,6 @@ string SHA :: add_padding(string& message) {
     int L = padded.size();
     int K = 0;
     while ((L + 1 + K + 64) % 512 != 0) K++;
-    // int K = (512 - ((L + 1 + 64) % 512)) % 512;
 
     string zero_padding = string(K, '0');
     string messageSize = bitset<64> (L).to_string();
@@ -51,9 +50,6 @@ string SHA :: compute_hash(string& padded) {
         create_message_schedule(chunk, message_schedule);
         run_compression_function(H, k, message_schedule);
     }
-
-    // Append the hash segments together one after the other
-    // to get the full 256 bit hash.
     string hash = "";
     for (int i = 0; i < 8; i++) {
         hash += to_hex_string(H[i]);
@@ -63,16 +59,10 @@ string SHA :: compute_hash(string& padded) {
 
 
 
-/*
-    takes reference to the current 512 bit chunk of binary string, and message_schedule array.
-    modifies the array to contain the message schedule for current chunk
-*/
 void SHA :: create_message_schedule(string& chunk, vector<uint64_t>& message_schedule) {
-    // copy first 16 words of 32 bit each from the chunk
     for (int i = 0; i < 512; i += 32) {
         message_schedule[i/32] = stoul(chunk.substr(i, 32), 0, 2);
     }
-    // create remaining 48 words
     for (int i = 16; i < 64; i++) {
         uint64_t s0 = SIGMA0(message_schedule[i-15]);
         uint64_t s1 = SIGMA1(message_schedule[i-2]);
@@ -82,14 +72,7 @@ void SHA :: create_message_schedule(string& chunk, vector<uint64_t>& message_sch
 }
 
 
-
-/*
-    takes arrays(pointers) of Hash constant and round constants, and message_schedule array.
-    It runs compression funcion for the current 512 bit chunk,
-    which mutates the hash constants
-*/
 void SHA :: run_compression_function(uint64_t H[], uint64_t k[], vector<uint64_t>& message_schedule) {
-    // Initialize working variables to current hash value
     uint64_t temp1;
     uint64_t temp2;
     uint64_t a = H[0];
@@ -104,19 +87,19 @@ void SHA :: run_compression_function(uint64_t H[], uint64_t k[], vector<uint64_t
     for (int i = 0; i < 64; i++) {
         uint64_t s1 = EPSILON1(e);
         uint64_t ch = CH(e, f, g);
-        temp1 = TAKEMOD(h + s1 + ch + k[i] + message_schedule[i]); // modulo 2^32
+        temp1 = TAKEMOD(h + s1 + ch + k[i] + message_schedule[i]); 
         uint64_t s0 = EPSILON0(a);
         uint64_t maj = MAJ(a, b, c);
-        temp2 = TAKEMOD(s0 + maj); // modulo 2^32
+        temp2 = TAKEMOD(s0 + maj); 
 
         h = g;
         g = f;
         f = e;
-        e = TAKEMOD(d + temp1); // modulo 2^32
+        e = TAKEMOD(d + temp1);
         d = c;
         c = b;
         b = a;
-        a = TAKEMOD(temp1 + temp2); // modulo 2^32
+        a = TAKEMOD(temp1 + temp2);
     }
 
     H[0] = TAKEMOD(H[0] + a);
@@ -142,7 +125,6 @@ uint64_t SHA :: ROTRIGHT(uint64_t word, uint64_t bits) {
     return (((word) >> (bits)) | ((word) << (32-(bits))));
 }
 
-// to be used to create message schedule
 uint64_t SHA :: SIGMA0(uint64_t x) {
     return (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3));
 }
@@ -150,7 +132,6 @@ uint64_t SHA :: SIGMA1(uint64_t x) {
     return (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10));
 }
 
-// to be used in computing hash
 uint64_t SHA :: EPSILON0(uint64_t x) {
     return (ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22));
 }
@@ -164,7 +145,6 @@ uint64_t SHA :: MAJ(uint64_t x, uint64_t y, uint64_t z) {
     return (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)));
 }
 
-// returns module 2^32
 uint64_t SHA :: TAKEMOD(uint64_t x) {
     return (x & 0xFFFFFFFF);
 }
