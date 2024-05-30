@@ -17,17 +17,19 @@ public:
         requests["signup"] = 3;
         requests["logout"] = 4;
     }
+    QString user;
 
 private:
     std::map<QString, unsigned> requests;
     QString login(QString);
     QString logout(QString);
     QString signup(QString);
-    void solution(QString);
+    QStringList check(QString task);
     QStringList parse_auth(QString);
     QString parse_request(QString);
-
-
+    void check(QStringList tasks);
+    float task_1(QString params);
+    float task_2(QString params);
 };
 
 #endif // SERVER_LOGIC_H

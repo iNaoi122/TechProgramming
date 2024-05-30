@@ -17,7 +17,7 @@ DataBase::DataBase()
         QSqlQuery query(db);
         query.exec("CREATE TABLE User("
                    "login VARCHAR(20) NOT NULL, "
-                   "password VARCHAR(20) NOT NULL,"
+                   "password VARCHAR(100) NOT NULL,"
                    "email VARCHAR(20) NOT NULL,"
                    "task1 INT,"
                    "task2 INT,"
@@ -141,15 +141,10 @@ QStringList DataBase::statistics(QString Login)
     return res2;
 }
 
-QStringList DataBase::check(QString task)
+void DataBase::update(QString task, int result, QString Login)
 {
     QStringList res;
-    if (true)
-    {
-        res.append("check+");
-    }
-    else
-    {
-        res.append("check-");
-    }
+    res.append("update users set "+ task+" = "+task+" + "+ QString :: number (result)+" WHERE login = :login;");
+    res.append(Login);
+    res = DataBase::GetInstance()->sendQuerry(res);
 }

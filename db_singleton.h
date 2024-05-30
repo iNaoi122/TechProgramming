@@ -41,7 +41,7 @@ public:
     QStringList auth(QString Loing, QString Password);
     QStringList reg(QString Loing, QString Password, QString Email);
     QStringList statistics(QString Loing);
-    QStringList check(QString task);
+    void update(QString task, int res, QString Login);
 };
 
 

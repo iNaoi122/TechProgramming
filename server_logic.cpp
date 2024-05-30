@@ -2,7 +2,7 @@
 #include<QCoreApplication>
 #include <QTcpSocket>
 #include "server_logic.h"
-#include "des.h"
+#include "db_singleton.h"
 
 void ServerLogic::requestAnalyzer(QString request_string, QTcpSocket *socket)
 {
@@ -14,7 +14,7 @@ void ServerLogic::requestAnalyzer(QString request_string, QTcpSocket *socket)
         break;
     case 2:
         qDebug()<<"get_solution";
-        solution(request_string);
+        //check();
         break;
     case 3:
         qDebug()<<"signup";
@@ -33,6 +33,7 @@ void ServerLogic::requestAnalyzer(QString request_string, QTcpSocket *socket)
 QString ServerLogic::login(QString text)
 {
     qDebug()<<parse_auth(text);
+    ServerLogic::user = text;
     return "Successful";
 }
 
@@ -48,9 +49,55 @@ QString ServerLogic::signup(QString text)
     return "Successful";
 }
 
-void ServerLogic::solution(QString text)
+void ServerLogic::check(QStringList tasks)//tasks = {task_number, answer, params}
 {
+    float res;
+    if (tasks[0] == "task_1")
+    {
+        res = task_1(tasks[2]);
+    }
+    else if (tasks[0] == "task_2")
+    {
+        res = task_2(tasks[2]);
+    }
+    else
+    {
+        qDebug()<<"Not valid task name";
+        return;
+    }
+    if(tasks[1].toFloat()==res)
+    {
+        res = 1;
+    }
+    else
+    {
+        res = -1;
+    }
+    DataBase::GetInstance()->update(tasks[0], int(res), ServerLogic::user);
+}
 
+float ServerLogic::task_1(QString params)//params = param1|param2|param3...
+{
+    if (params == "1")
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+float ServerLogic::task_2(QString params)//params = param1|param2|param3...
+{
+    if (params == "2")
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 QStringList ServerLogic::parse_auth(QString request_params)
