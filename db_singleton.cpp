@@ -1,4 +1,5 @@
 #include "db_singleton.h"
+#include"sha.h"
 
 DataBase * DataBase::p_instance = nullptr;
 DataBaseDestroyer DataBase::destroyer;
@@ -76,7 +77,7 @@ QStringList DataBase::auth(QString Login, QString Password)
     QStringList res, res2;
     res.append("SELECT login FROM users WHERE login = :login and password = :password;");
     res.append(Login);
-    res.append(Password);
+    res.append(SHA::get_hash(Password));
     res = DataBase::GetInstance()->sendQuerry(res);
     if (res.size() > 0)
     {
@@ -95,7 +96,7 @@ QStringList DataBase::reg(QString Login, QString Password, QString Email)
     QStringList res, res2;
     res.append("SELECT login FROM users WHERE login = :login and password = :password;");
     res.append(Login);
-    res.append(Password);
+    res.append(SHA::get_hash(Password));
     res = DataBase::GetInstance()->sendQuerry(res);
     if (res.size() > 0)
     {
@@ -105,7 +106,7 @@ QStringList DataBase::reg(QString Login, QString Password, QString Email)
     {
         res.append("INSERT INTO users (login, password, email, task1, task2) VALUES (:login, :password, :email, 0,  0);");
         res.append(Login);
-        res.append(Password);
+        res.append(SHA::get_hash(Password));
         res.append(Email);
         res = DataBase::GetInstance()->sendQuerry(res);
         if (res.size() > 0)

@@ -21,7 +21,8 @@ SOURCES += \
     db_singleton.cpp \
     main.cpp \
     mytcpserver.cpp \
-    server_logic.cpp
+    server_logic.cpp \
+    sha.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -31,4 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     db_singleton.h \
     mytcpserver.h \
-    server_logic.h
+    server_logic.h \
+    sha.h
