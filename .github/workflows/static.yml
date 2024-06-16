@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        # install doxygen
+       # Install Doxygen
       - name: Install Doxygen
         run: sudo apt install doxygen && doxygen --version
 
@@ -43,11 +43,12 @@ jobs:
       # Create documentation   
       - name: Create documentation     
         run: doxygen
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: './html/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
