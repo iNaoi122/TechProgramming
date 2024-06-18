@@ -1,2 +1,0 @@
-# TechProgramming
-Main branch
